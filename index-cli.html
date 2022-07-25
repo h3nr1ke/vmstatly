@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>VMStatly</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <link
+      href="lib/materialize/css/materialize.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="css/vmstatly.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <header>
+      <nav class="menu">
+        <h1 class="name">vmstatly</h1>
+      </nav>
+    </header>
+
+    <main class="content">
+      <div id="GraphsContainer">
+        <h3>Processes</h3>
+        <div id="proc-stats" class="graph"></div>
+        <ul>
+          <li><b>r</b>: How many processes are waiting for CPU time.</li>
+          <li>
+            <b>b</b>: Wait Queue - Process which are waiting for I/O (disk,
+            network, user input,etc..)
+          </li>
+        </ul>
+
+        <h3>Memory</h3>
+        <div id="mem-stats" class="graph"></div>
+        <ul>
+          <li><b>free</b>: Idle Memory</li>
+          <li>
+            <b>buff</b>: Memory used as buffers, like before/after I/O
+            operations
+          </li>
+          <li><b>cache</b>: Memory used as cache by the Operating System</li>
+          <li>
+            (Ignored)<b>swpd</b>: shows how many blocks are swapped out to disk
+            (paged). Total Virtual memory usage.
+          </li>
+        </ul>
+
+        <h3>Swap</h3>
+        <div id="swap-stats" class="graph"></div>
+        <ul>
+          <li>
+            <b>si</b>: How many blocks per second the operating system is
+            swapping in. i.e Memory swapped in from the disk (Read from swap
+            area to Memory)
+          </li>
+          <li>
+            <b>so</b>: How many blocks per second the operating system is swaped
+            Out. i.e Memory swapped to the disk (Written to swap area and
+            cleared from Memory)
+          </li>
+        </ul>
+
+        <h3>IO</h3>
+        <div id="io-stats" class="graph"></div>
+        <ul>
+          <li>
+            <b>bi</b>: Blocks received from block device - Read (like a hard
+            disk)
+          </li>
+          <li><b>bo</b>: Blocks sent to a block device - Write</li>
+        </ul>
+
+        <h3>System</h3>
+        <div id="sys-stats" class="graph"></div>
+        <ul>
+          <li>
+            <b>in</b>: The number of interrupts per second, including the clock.
+          </li>
+          <li><b>cs</b>: The number of context switches per second.</li>
+        </ul>
+
+        <h3>CPU</h3>
+        <div id="cpu-stats" class="graph"></div>
+        <ul>
+          <li>
+            <b>us</b>: percentage of cpu used for running non-kernel code. (user
+            time, including nice time)
+          </li>
+          <li>
+            <b>sy</b>: percentage of cpu used for running kernel code. (system
+            time - network, IO interrupts, etc)
+          </li>
+          <li><b>id</b>: cpu idle time in percentage.</li>
+          <li><b>wa</b>: percentage of time spent by cpu for waiting to IO.</li>
+        </ul>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="footer-copyright">
+        <div class="container">
+          <a href="https://github.com/jsargiot/vmstatly"
+            ><img src="img/github.png"
+          /></a>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="lib/highcharts/highcharts-custom.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script
+      src="lib/highcharts/highcharts-theme.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+
+    <script
+      src="json/timeseries.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script
+      src="js/vmstatly.charts.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+
+    <script
+      src="js/vmstatly.charts.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+
+    <script>
+      vmstatly.charts.process(
+        "proc-stats",
+        "Processes Stats",
+        "",
+        "Processes",
+        " procs",
+        timeseries
+      );
+      vmstatly.charts.memory(
+        "mem-stats",
+        "Memory Stats",
+        "",
+        "Kb",
+        " kb",
+        timeseries
+      );
+      vmstatly.charts.swap(
+        "swap-stats",
+        "Swap Stats",
+        "",
+        "Blocks",
+        " blocks/s",
+        timeseries
+      );
+      vmstatly.charts.io(
+        "io-stats",
+        "IO Stats",
+        "",
+        "Blocks",
+        " blocks",
+        timeseries
+      );
+      vmstatly.charts.system(
+        "sys-stats",
+        "System Stats",
+        "",
+        "X",
+        " x/s",
+        timeseries
+      );
+      vmstatly.charts.cpu("cpu-stats", "CPU Stats", "", "%", " %", timeseries);
+    </script>
+  </body>
+</html>
